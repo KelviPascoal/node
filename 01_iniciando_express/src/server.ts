@@ -64,10 +64,7 @@ app.put('/products/:id', (request: Request, response: Response) => {
 
     response.status(202).json(product);
 
-
 });
-
-
 
 app.listen((port), () => {
     console.log("🐱‍👤 server is running");
