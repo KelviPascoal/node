@@ -5,4 +5,4 @@ const ProductSchema = new Mongoose.Schema({
     price: Number,
 })
 
-export default Mongoose.model('Product', ProductSchema);
+export default Mongoose.model('Product', ProductSchema, 'product');
