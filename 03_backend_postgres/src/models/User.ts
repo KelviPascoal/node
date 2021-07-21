@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Photo } from './Photos'
 
 @Entity('users')
 class User {
@@ -12,6 +13,9 @@ class User {
     email: string;
 
     @Column()
+    avatar: string;
+
+    @Column()
     password: string;
 
     @CreateDateColumn()
@@ -19,6 +23,9 @@ class User {
   
     @UpdateDateColumn()
     updated_at: Date;
+
+    @OneToMany(() => Photo, photo => photo.user)
+    photos: Photo[];
 }
 
 export { User };

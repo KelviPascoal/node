@@ -1,50 +1,33 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 export class CreateUsers1625247506720 implements MigrationInterface {
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+    create table users (
+      id serial,	
+      user_id int null,		
+      name varchar ( 255 ),
+      email varchar ( 255 ),
+      password varchar ( 255 ),
+      created_at timestamp NOT NULL DEFAULT NOW() ,
+      updated_at timestamp NOT NULL DEFAULT NOW() ,
+      
+      constraint pk_users primary key(id),
+      constraint uc_users_email unique(email)
+    );`)
+  }
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.createTable(
-            new Table({
-                name: "users",
-                columns: [
-                    {
-                        name: "id",
-                        type: "uuid",
-                        isPrimary: true,
-                        generationStrategy: "uuid",
-                        default: "uuid_generate_v4()",
-                      },
-                    {
-                        name: "name",
-                        type: "varchar"
-                    },
-                    {
-                        name: "email",
-                        type: "varchar",
-                        isUnique: true,
-                    },
-                    {
-                        name: "password",
-                        type: "varchar"
-                    },
-                    {
-                        name: "created_at",
-                        type: "timestamp",
-                        default: "now()",
-                    },
-                    {
-                        name: "updated_at",
-                        type: "timestamp",
-                        default: "now()",
-                    },
+  //  public async up(queryRunner: QueryRunner): Promise<void> {
+  //     await queryRunner.query(`
+  //     create table erick (
+  //         name varchar(255)
 
-                ]
-            })
-        )
-    }
+  //     )
+  //     `
+  //     )
+  // }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('users');
-    }
-
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable("users");
+  }
 }

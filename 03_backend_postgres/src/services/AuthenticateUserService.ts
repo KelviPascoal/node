@@ -2,6 +2,7 @@ import { compare } from "bcryptjs";
 import { getRepository } from "typeorm";
 import { User } from "../models/User";
 import { sign } from "jsonwebtoken";
+import authConfig from '../config/auth'
 
 interface Request {
   email: string;
@@ -27,9 +28,9 @@ class AuthenticateUserService {
       throw new Error("Email ou senha invalido!");
     }
 
-    const token = sign({}, "ccac7f72da5add3d5826ea2e0675ab85", {
+    const token = sign({}, authConfig.jwt.secret , {
       subject: user.id,
-      expiresIn: "1d",
+      expiresIn: authConfig.jwt.expiresIn,
     });
 
     return { user, token };
